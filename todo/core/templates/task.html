@@ -1,0 +1,16 @@
+
+
+
+
+
+{% for task in object_list %}
+<br>
+<div class="py-3">
+title: {{ task.title }} <br>
+text: {{task.text}} <br>
+planing complete : {{task.date_planned_completion}} <br>
+created : {{task.date_created}}<br>
+complete: {{task.complete}}<br>
+<a href="{% url 'edit_task' task.pk%}">Edit task</a> 
+</div>
+{% endfor %}
