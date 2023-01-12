@@ -1,16 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+    
 
+{{request.user}} <br>
 
+Uncomplete task: {{count}} <br>
+Complete task: {{done}}
 
-
-
-{% for task in object_list %}
+<br><br>
+<hr>
+{% for task in tasks %}
 <br>
 <div class="py-3">
 title: {{ task.title }} <br>
 text: {{task.text}} <br>
 planing complete : {{task.date_planned_completion}} <br>
 created : {{task.date_created}}<br>
+expire: {{ task.date_planned_completion|timeuntil }} <br>
 complete: {{task.complete}}<br>
+autor : {{task.user}}
 <a href="{% url 'edit_task' task.pk%}">Edit task</a> 
+<a href="{% url 'delete_task' task.pk%}">Delete task</a> 
 </div>
 {% endfor %}
+
+{% endblock %}
