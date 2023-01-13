@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+    
+
+{{request.user}} <br>
+
+
+<br><br>
+<hr>
+
+
+<h1>halo</h1>
+<h2>Blue</h2>
+
+{% for user in object_list %}
+  {% if user.incomplete_task_count > 0 %}
+    <p>{{ user.username }} - {{ user.task_count }} tasks ({{ user.complete_task_count }} completed, {{ user.uncomplete_task_count }} incomplete, {{ user.incomplete_task_count }} incomplete after planned completion date)</p>
+  {% endif %}
+{% endfor %}
+
+
+
+
+</div>
+</center>
+{% endblock %}

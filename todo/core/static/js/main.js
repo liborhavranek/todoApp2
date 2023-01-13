@@ -1,3 +1,4 @@
-$(document).ready(function(){
-    $( "#time_in_future" ).datetimepicker();
-});
+
+$(function () {
+    $(".alert").fadeOut(3000)
+  });
