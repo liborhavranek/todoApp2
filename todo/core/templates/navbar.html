@@ -7,23 +7,25 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{% url 'add_task' %}">Addd task</a>
+            <a class="nav-link" href="{% url 'task' %}">Task</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'add_task' %}">Add task</a>
+          </li>
+          {% if request.user.is_authenticated%}
+        
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'logout' %}">({{request.user}})Logout</a>
+          </li>
+
+          {% else %}
           <li class="nav-item">
             <a class="nav-link" href="{% url 'login' %}">Login</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'logout' %}">Logout</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link disabled">{{request.user}}</a>
-          </li>
-          <li class="nav-item">
             <a class="nav-link" href="{% url 'register' %}">Register</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'task' %}">Task</a>
-          </li>
+            {% endif %}
           <li class="nav-item">
             <a class="nav-link" href="{% url 'userlist' %}">Admin</a>
           </li>
