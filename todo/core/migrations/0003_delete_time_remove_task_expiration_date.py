@@ -6,15 +6,15 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('core', '0002_time_task_date_completion_and_more'),
+        ("core", "0002_time_task_date_completion_and_more"),
     ]
 
     operations = [
         migrations.DeleteModel(
-            name='Time',
+            name="Time",
         ),
         migrations.RemoveField(
-            model_name='task',
-            name='expiration_date',
+            model_name="task",
+            name="expiration_date",
         ),
     ]

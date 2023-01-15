@@ -6,32 +6,40 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('core', '0001_initial'),
+        ("core", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Time',
+            name="Time",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('time_created', models.DateTimeField(auto_now_add=True)),
-                ('time_in_future', models.DateTimeField()),
-                ('time_expired', models.DateTimeField(blank=True, null=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("time_created", models.DateTimeField(auto_now_add=True)),
+                ("time_in_future", models.DateTimeField()),
+                ("time_expired", models.DateTimeField(blank=True, null=True)),
             ],
         ),
         migrations.AddField(
-            model_name='task',
-            name='date_completion',
+            model_name="task",
+            name="date_completion",
             field=models.DateTimeField(blank=True, null=True),
         ),
         migrations.AddField(
-            model_name='task',
-            name='date_planned_completion',
+            model_name="task",
+            name="date_planned_completion",
             field=models.DateTimeField(blank=True, null=True),
         ),
         migrations.AddField(
-            model_name='task',
-            name='expiration_date',
+            model_name="task",
+            name="expiration_date",
             field=models.DateTimeField(blank=True, null=True),
         ),
     ]
