@@ -10,7 +10,9 @@ from  django.contrib.auth import login
 from django.contrib import messages
 from datetime import datetime
 from django.db.models import Count, Q
-
+from typing import Type, TypeVar, List, Dict, Union
+from . import models
+from django.db.models import QuerySet
 
 # Create your views here.
 
@@ -20,12 +22,13 @@ class HomeView(TemplateView):
 
 
 class TaskCreateView(CreateView):
-    model = Task
-    form_class = TaskForm
+    model: Type[Task] = Task
+    form_class: Type[TaskForm] = TaskForm
     template_name = 'add_task.html'
     success_url = reverse_lazy('task')
     
-    def form_valid(self, form):
+    # The form_valid method of the CreateView class returns a Boolean indicating whether the form is valid or not.
+    def form_valid(self, form: TaskForm) -> bool:
         title = form.cleaned_data.get('title')
         text = form.cleaned_data.get('text')
         if len(title) < 4:
@@ -39,24 +42,24 @@ class TaskCreateView(CreateView):
         messages.success(self.request, 'Task created successfully!')
         return response
 
-    # def form_invalid(self, form):
-    #     return super().form_invalid(form)
-
 
 
 
 class TaskListView(LoginRequiredMixin, ListView):
-    model = Task
+    model: Type[Task] = Task
     template_name = 'task.html'
     ordering = ['date_planned_completion']
     context_object_name = 'tasks'
     
-    def get_queryset(self):
+    def get_queryset(self)-> QuerySet:
         queryset = super().get_queryset()
         queryset = queryset.order_by('complete', 'date_planned_completion')
         return queryset
     
-    def get_context_data(self, **kwargs):
+    # Return dictionary is because tasks will set string username of current user 
+    # count will set like integer nuber of complete task 
+    # done will set like integer number of incomplete task 
+    def get_context_data(self, **kwargs)-> Dict[str, int]:
         context = super().get_context_data(**kwargs)
         context['tasks'] = context['tasks'].filter(user = self.request.user)
         context['count'] = context['tasks'].filter(complete=False).count()
@@ -66,12 +69,13 @@ class TaskListView(LoginRequiredMixin, ListView):
 
 
 class TaskUpdateView(UpdateView):
-    model = Task 
-    form_class = TaskUpdateForm
+    model: Type[Task] = Task 
+    form_class: Type[TaskUpdateForm] = TaskUpdateForm
     template_name = 'edit_task.html'
     success_url = reverse_lazy('task')
     
-    def form_valid(self, form):
+    # is the same like Task create view function return valid or invalid form bool
+    def form_valid(self, form:TaskUpdateForm) -> bool:
         title = form.cleaned_data.get('title')
         text = form.cleaned_data.get('text')
         if len(title) < 4:
@@ -88,18 +92,18 @@ class TaskUpdateView(UpdateView):
 
 class TaskDetailView(DetailView):
     template_name = 'detail_task.html'
-    model = Task
+    model: Type[Task] = Task
     context_object_name = 'task'
 
 
 
 class TaskDeleteView(DeleteView):
-    model = Task
+    model: Type[Task] = Task
     context_object_name = 'task'
     template_name = 'delete_task.html'
     success_url = reverse_lazy('task')
     
-    def get_queryset(self):
+    def get_queryset(self) -> QuerySet:
         owner = self.request.user
         return self.model.objects.filter(user=owner)
 
@@ -110,13 +114,14 @@ class CustomLoginView(LoginView):
     fields = '__all__'
     redirect_authenticated_user = True
     
-    def get_success_url(self):
+    # Union return string or reverse lazy. 
+    def get_success_url(self) -> Union[str, reverse_lazy]:
         return reverse_lazy('task')
     
     
 class CustomRegisterView(FormView):
     template_name = 'register.html'
-    form_class = UserCreationForm
+    form_class: Type[UserCreationForm] = UserCreationForm
     redirect_authenticated_user = True
     success_url = reverse_lazy('task')
     
@@ -137,10 +142,10 @@ class CustomRegisterView(FormView):
 
 
 class AdminUserList(ListView):
-    model = User
+    model: Type[User] = User
     template_name = "admin.html"
     
-    def get_queryset(self):
+    def get_queryset(self)  -> List[User]:
         queryset = super().get_queryset()
         queryset = queryset.annotate(task_count=Count('task'))
         queryset = queryset.annotate(complete_task_count=Count('task', filter=Q(task__complete=True)))
