@@ -12,7 +12,7 @@ from django.views.generic import (
 from .models import Task, User
 from .forms import TaskForm, TaskUpdateForm
 from django.contrib.auth.views import LoginView
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.contrib import messages
@@ -140,9 +140,12 @@ class CustomRegisterView(FormView):
         return super(CustomRegisterView, self).get(*args, **kwargs)
 
 
-class AdminUserList(ListView):
+class AdminUserList(UserPassesTestMixin, ListView):
     model: Type[User] = User
     template_name = "admin.html"
+    
+    def test_func(self):
+        return self.request.user.is_staff
 
     def get_queryset(self) -> List[User]:
         queryset = super().get_queryset()

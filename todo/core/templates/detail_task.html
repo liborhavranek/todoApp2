@@ -2,22 +2,36 @@
 {% block content %}
     
 
-{{request.user}} <br>
+{{request.user}} 
 
 
 
 <br>
-<div class="py-3">
-title: {{ task.title }} <br>
-text: {{task.text}} <br>
-planing complete : {{task.date_planned_completion}} <br>
+<div class="py-3 top-task-bar task-bar-color w-75">
+    <h1>{{request.user}} </h1>
+<h3>{{ task.title }} <br></h3>
+<p class="py-2">{{task.text}} </p>
+<div class="row">
+    <div class="col-6">
+planing complete : {{task.date_planned_completion}}
+</div>
+<div class="col-6">
 created : {{task.date_created}}<br>
-expire: {{ task.date_planned_completion|timeuntil }} <br>
-complete: {{task.complete}}<br>
-autor : {{task.user}}
-<a href="{% url 'edit_task' task.pk%}">Edit task</a> 
-<a href="{% url 'delete_task' task.pk%}">Delete task</a> 
-<a href="{% url 'detail_task' task.pk%}">Detail</a> 
+</div>
+</div>
+<div class="py-2">
+expire: {{ task.date_planned_completion|timeuntil }} 
+</div>
+<div>
+    {% if task.complete == 0 %}
+<h2>INCOMPLETE</h2>
+{% else %}
+<h2>COMPLETE</h2>
+{% endif %}
+</div>
+
+<a class="btn btn-danger" href="{% url 'edit_task' task.pk%}">Coplete task/Edit</a> 
+
 
 
 

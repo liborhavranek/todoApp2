@@ -2,25 +2,40 @@
 {% block content %}
     
 
-{{request.user}} <br>
+<h1 class="task-bar-color">{{request.user}}</h1> <br>
 
-
+<div class="w-75">
 <br><br>
 <hr>
 
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Username</th>
+        <th scope="col">Tasks</th>
+        <th scope="col">Complete tasks</th>
+        <th scope="col">Incomplete tasks</th>
+        <th scope="col">Expired tasks</th>
+      </tr>
+    </thead>
 
-<h1>halo</h1>
-<h2>Blue</h2>
-
-{% for user in object_list %}
-  {% if user.incomplete_task_count > 0 %}
-    <p>{{ user.username }} - {{ user.task_count }} tasks ({{ user.complete_task_count }} completed, {{ user.uncomplete_task_count }} incomplete, {{ user.incomplete_task_count }} incomplete after planned completion date)</p>
-  {% endif %}
-{% endfor %}
-
-
-
-
+    <tbody>
+        {% for user in object_list %}
+        {% if user.incomplete_task_count > 0 %}
+      <tr>
+        <th scope="row">{{user.id}}</th>
+        <td>{{ user.username }} </td>
+        <td>{{ user.task_count }}</td>
+        <td>{{ user.complete_task_count }} </td>
+        <td>{{ user.uncomplete_task_count }} </td>
+        <td>{{ user.incomplete_task_count }} </td>
+      </tr>
+      {% endif %}
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
 </div>
 </center>
 {% endblock %}

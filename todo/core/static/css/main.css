@@ -1,12 +1,36 @@
-h2{
-    color: blue;
-}
-
 .task-container{
     background: rgb(207,102,204);
     background: linear-gradient(90deg, rgba(207,102,204,1) 0%, rgba(121,9,107,1) 100%);
 }
 
-h1{
-    color: red;
+.top-task-bar {
+    background-color: #212529 ;
+  }
+
+
+.task-bar-color{
+    color: #FF8B13;
+  }
+
+.task-body{
+    background-color: #ECECEC;
 }
+
+.task-title{
+    color: #64cb00;
+}
+
+.links{
+    all:initial;
+    text-align: right;
+}
+
+.links-complete{
+    all:initial;
+    text-align: right;
+    color: #64cb00;
+    text-decoration: line-through;
+    font-family: 'Courier New', 'Courier New', Courier, monospace;
+
+}
+

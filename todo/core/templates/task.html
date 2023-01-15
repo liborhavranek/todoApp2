@@ -2,37 +2,57 @@
 {% block content %}
     
 
-{{request.user}} <br>
-
-Uncomplete task: {{count}} <br>
-Complete task: {{done}}
-
-<br><br>
-<hr>
 
 
-<h1>halo</h1>
-<h2>Blue</h2>
+<div class="w-75">
+    <div class="top-task-bar py-5 task-bar-color">
+
+<h1>{{request.user}}</h1> <br>
+
+
+<div class="row">
+    <div class="col-6">
+<h3>Uncomplete task: {{count}}</h3>
+</div>
+<div class="col-6">
+<h3>Complete task: {{done}}</h3>
+</div>
+</div>
+</div>
+
+
 {% for task in tasks %}
-<br>
-<div class="py-3">
-title: {{ task.title }} <br>
-text: {{task.text}} <br>
-planing complete : {{task.date_planned_completion}} <br>
-created : {{task.date_created}}<br>
-expire: {{ task.date_planned_completion|timeuntil }} <br>
-complete: {{task.complete}}<br>
-autor : {{task.user}}
-<a href="{% url 'edit_task' task.pk%}">Edit task</a> 
-<a href="{% url 'delete_task' task.pk%}">Delete task</a> 
-<a href="{% url 'detail_task' task.pk%}">Detail</a> 
 
 
+
+    <div class="row task-body d-flex align-items-center px-5">
+        <div class="col-5">
+            {% if task.complete == 0 %}
+<a class="links" href="{% url 'detail_task' task.pk%}"><h1 class="task-title text-start">{{ task.title }}</h1></a>
+{% else %}
+<a class="links-complete" href="{% url 'detail_task' task.pk%}"><h1 class="task-title text-start">{{ task.title }}</h1></a>
+{% endif %}
+</div>
+<div class="col-5 text-end">
+{{ task.date_planned_completion|timeuntil }}
 
 </div>
+
+<div class="col-2">
+    <a class="links" href="{% url 'delete_task' task.pk%}"><h1 class="">x</h1></a> 
+ 
+</div>
+<!-- <a href="{% url 'edit_task' task.pk%}">Edit task</a>
+<a href="">Detail</a>  -->
+
+<hr>
+</div>
+
+
+
 {% endfor %}
 
-
+</div>
 </div>
 </center>
 {% endblock %}
